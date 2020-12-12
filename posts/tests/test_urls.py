@@ -60,7 +60,7 @@ class UrlTest(TestCase):
             ).sites.add(site1)
 
     def test_access_guest(self):
-        """Страница доступна неавторизованному пользователю."""
+        """Доступ к страницам"""
         templates_url_names = (
             reverse('index'),
             reverse('group', kwargs={'slug': 'test_slug'}),
@@ -69,6 +69,8 @@ class UrlTest(TestCase):
             reverse('post', kwargs={'username': 'Tihon', 'post_id': '1'}),
             reverse('profile', kwargs={'username': 'Tihon'}),
             reverse('new_post'),
+            reverse('add_comment', kwargs={'username': 'Tihon',
+                                           'post_id': '1'})
             )
         for url in templates_url_names:
             with self.subTest():
@@ -78,6 +80,15 @@ class UrlTest(TestCase):
                         response.status_code,
                         200, (
                             'Неавторизованный пользователь может'
+                            f'попасть на страницу по адресу {url}'
+                        )
+                    )
+                elif url == reverse('add_comment', kwargs={'username': 'Tihon',
+                                                           'post_id': '1'}):
+                    self.assertNotEqual(
+                        response.status_code,
+                        200, (
+                            'Неавторизованный пользователь может '
                             f'попасть на страницу по адресу {url}'
                         )
                     )

@@ -1,9 +1,8 @@
 {% extends "base.html" %}
 {% block title %}Страница записи{% endblock %}
 {% block header %}Запись автора {{ post.author.username }}{% endblock %}
-{% block content %}
 {% load thumbnail %}
-
+{% block content %}
 
 <main role="main" class="container">
         {% include 'includes/card_author.html' %}
